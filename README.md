@@ -42,9 +42,14 @@ var List = new mongoose.Schema({ 
 
 ## Wireframes
 /category/create - page for creating a new favorites category
-![category create](documente/create.png)
+
+![category create](documentation/create.png)
+
 /category - page for showing all favorite categories
-![category](documente/category.png)
+
+![category](documentation/category.png)
+
 /category/slug - page for showing a specific category
-![category](documente/category-slug.png)
+
+![category](documentation/category-slug.png)
 

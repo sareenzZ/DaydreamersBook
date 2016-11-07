@@ -57,7 +57,7 @@ var List = new mongoose.Schema({ 
 
 ## Site map
 
-
+![sitemap](documentation/sitemap.png)
 
 
 ## User Story

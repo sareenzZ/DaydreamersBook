@@ -41,6 +41,10 @@ var List = new mongoose.Schema({ 
 
 
 ## Wireframes
-(these are html mockups for wireframes, though they can be created using wireframing tools or even hand-drawn)
-/list/create - page for creating a new shopping list
+/category/create - page for creating a new favorites category
+![category create](documentation/create.png)
+/category - page for showing all favorite categories
+![category](documentation/category.png)
+/category/slug - page for showing a specific category
+![category](documentation/category-slug.png)
 

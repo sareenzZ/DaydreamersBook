@@ -1,12 +1,12 @@
-# zz589-final-project  My Favorites
+# zz589-final-project  My Favorite Things
 
 ## Overview
 We are all trying to discover who we are in the world. However, sometimes we become too engaged in living that we could not remember of a big part of our identification: our favorite things! 
 
 My Favorites is a web app that allows users to keep track of their favorite things! Users can register and login. After they are logged in, they can create or view categories of favorites. For every section they have, they can add or delete a customized item which includes a name,  a quantity representing the number of times they feel a strong love towards the item, and an option description of special feelings.  
 
-## Data Model
 
+## Data Model
 First draft schema:
 ```javascript
 // users 
@@ -52,4 +52,29 @@ var List = new mongoose.Schema({ 
 /category/slug - page for showing a specific category
 
 ![category](documentation/category-slug.png)
+
+
+
+## Site map
+
+![sitemap](documentation/sitemap.png)
+
+
+## User Story
+1. as a user, I can create a new favorites category
+2. as a user, I can view all of the favorites categories I've created in a single list
+3. as a user, I can add items to an existing favorites category
+4. as a user, I can change the number of times I uncontrollably like items in an existing favorites category
+
+
+## Research Topics
+* (6 points) Integrate user authentication
+    * I'm going to be using Passport.js for user authentication
+    * implement sign up and registration 
+    * And account has been made for testing; I'll email you the password
+* (2 points) Use a CSS framework throughout my site, use a reasonable of customization of the framework 
+    * with Bootstrap 
+    * configure a theme 
+
+
 

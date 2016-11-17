@@ -1,0 +1,30 @@
+<html>
+
+<h2>480Chan - Image Board!</h2>
+
+<body>
+{{{body}}}
+
+<p style="color:red">{{err}}</p></br>
+
+<form method="POST" action="">
+    Section: <input type="text" name="title"> </br>
+    <input type="submit" value="Add New Image Post">
+</form>
+
+{{#each sections}}
+    </br></br>
+    <a href="/image-posts/{{slug}}"> <h1>{{title}}</h1></a>
+    {{#each images}}
+        <p>{{caption}}</p>
+        <img src={{url}} >
+    {{/each}}
+
+{{/each}}
+
+
+
+
+
+</body>
+</html>

@@ -1,9 +1,9 @@
-# zz589-final-project  My Favorite Things
+#Daydreamer's Book
 
 ## Overview
-We are all trying to discover who we are in the world. However, sometimes we become too engaged in living that we could not remember of a big part of our identification: our favorite things! 
+We are all trying to discover who we are in the world. However, sometimes we become too engaged in living that we could not remember a big part of our identification: our favorite things!
 
-My Favorites is a web app that allows users to keep track of their favorite things! Users can register and login. After they are logged in, they can create or view categories of favorites. For every section they have, they can add or delete a customized item which includes a name,  a quantity representing the number of times they feel a strong love towards the item, and an option description of special feelings.  
+My Favorite Things is a web app that allows users to keep track of their favorite things! Users can register and login. After they are logged in, they can create or view categories of favorites. For every category they have, they can add or delete a customized item which includes a name, a quantity that they can update to represent the number of times they feel a strong love towards the item, and an optional description of special feelings.
 
 
 ## Data Model

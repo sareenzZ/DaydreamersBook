@@ -1,0 +1,26 @@
+{
+  "name": "zz589-final-project",
+  "version": "1.0.0",
+  "description": "## Overview We are all trying to discover who we are in the world. However, sometimes we become too engaged in living that we could not remember a big part of our identification: our favorite things!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0480-007-fall-2016/zz589-final-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0480-007-fall-2016/zz589-final-project/issues"
+  },
+  "homepage": "https://github.com/nyu-csci-ua-0480-007-fall-2016/zz589-final-project#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "hbs": "^4.0.1",
+    "mongoose": "^4.6.8",
+    "mongoose-url-slugs": "^0.2.1"
+  }
+}

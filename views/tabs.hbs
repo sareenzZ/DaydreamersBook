@@ -1,26 +1,30 @@
 <html>
 
-<h2>480Chan - Image Board!</h2>
+<h2>Daydreamer's Book</h2>
 
 <body>
-{{{body}}}
 
 <p style="color:red">{{err}}</p></br>
 
+
 <form method="POST" action="">
-    Section: <input type="text" name="title"> </br>
-    <input type="submit" value="Add New Image Post">
+    Tab: <input type="text" name="tabName">
+    <input type="submit" name = 'add' value="Add ">
 </form>
+</br></br></br>
 
-{{#each sections}}
-    </br></br>
-    <a href="/image-posts/{{slug}}"> <h1>{{title}}</h1></a>
-    {{#each images}}
-        <p>{{caption}}</p>
-        <img src={{url}} >
-    {{/each}}
 
+<form method="POST" action="">
+{{#each tabs}}
+    </div class='tab'>
+    <input type="checkbox" name="check" value={{_id}}>
+    <a href=""> <h1>{{name}}</h1></a>
+    </div>
 {{/each}}
+
+    </br>
+    <input type="submit" name= 'del' value="Delete">
+</form>
 
 
 

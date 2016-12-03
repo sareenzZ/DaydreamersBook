@@ -1,6 +1,8 @@
 <html>
 
-<h2>Daydreamer's Book</h2>
+<h1>Daydreamer's Book</h1>
+<!--d -->
+
 
 <body>
 
@@ -13,12 +15,16 @@
 </form>
 </br></br></br>
 
+<h2>Table of Contents</h2>
 
 <form method="POST" action="">
 {{#each tabs}}
     </div class='tab'>
     <input type="checkbox" name="check" value={{_id}}>
-    <a href=""> <h1>{{name}}</h1></a>
+    <a href="/tabs/{{slug}}"> <b>{{name}}</b></a>
+    {{#each pages}}
+        <p>{{name}}</p>
+    {{/each}}
     </div>
 {{/each}}
 

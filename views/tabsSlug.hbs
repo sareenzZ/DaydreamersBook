@@ -1,0 +1,32 @@
+<html>
+
+<h2>Daydreamer's Book</h2>
+
+
+<p style="color:red">{{err}}</p></br>
+
+<form method="POST" action="">
+
+    <a href="/tabs/{{tabs.slug}}"> <h1>{{tabs.title}}</h1></a>
+    {{#each tabs.pages}}
+        </br><input type="checkbox" name="check" value={{_id}}>
+        <b>{{name}}</b></br>
+        <text>{{description}}</text></br>
+        <!-- <img src=> -->
+        <text>{{numsLiked}}</text></br>
+        </br></br>
+    {{/each}}
+
+    </br></br>
+    <input type="submit" name= 'del' value="Delete">
+</form>
+
+</br>
+<form method="POST" action="">
+    Page Name: <input type="text" name="name">  Page Description: <textarea name="description"></textarea>
+    <input type="submit" value="Add New Page">
+</form>
+
+<a href="/tabs">Back to Table of Contents</a>
+
+</html>

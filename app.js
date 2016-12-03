@@ -15,12 +15,47 @@ var app = express();
 var bodyParser=require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
+
+//use passort for user sign in
+
+/*
+var passport = require('passport');
+app.use(session({secret: 'secret'}));
+app.use(passport.initialize());
+app.use(passport.session());
+*/
+
+
 app.set('view engine', 'hbs');
 
-app.get('/login', function(req,res){
+//not working yet...
+app.get('/signin', function(req,res){
     //login page
+    res.render('signup.hbs');
 });
 
+/*
+app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/',
+        failureRedirect: '/signin'
+    })
+);
+
+app.post('/login', passport.authenticate('local-signin', {
+        successRedirect: '/',
+        failureRedirect: '/signin'
+    })
+);
+
+app.get('/logout', function(req, res){
+    var name = req.user.username;
+    console.log("LOGGIN OUT " + req.user.username)
+    req.logout();
+    res.redirect('/');
+    req.session.notice = "You have successfully been logged out " + name + "!";
+});
+
+*/
 
 app.get('/tabs', function(req, res) {
 
@@ -74,5 +109,89 @@ app.post('/tabs',function(req, res) {
 
 });
 
+//slug for a tab
+app.get('/tabs/:slug', function(req, res, next){
 
-app.listen(3000);
+    Tab.findOne({'slug':req.params.slug}, function(err,tabs,count) {
+        res.render('tabsSlug.hbs', {'tabs': tabs});
+    });
+
+});
+
+
+app.post('/tabs/:slug', function(req, res, next){
+
+    //delete
+    if(req.body.del){
+        var checked = req.body.check;
+        if (Array.isArray(checked)) {
+            for (var i = 0; i < checked.length; i++)
+                Tab.update(
+                    {'slug': req.params.slug},
+                    { $pull: {'pages':{'_id':checked[i]}}},
+                    false,
+                    function(error, tabs, count){ }
+                );
+        }
+
+        else {
+            Tab.update(
+                {'slug': req.params.slug},
+                { $pull: {'pages':{'_id':checked}}},
+                false,
+                function(err, tabs, count){}
+            );
+        }
+
+        res.redirect('/tabs/'+req.params.slug);
+
+    }//end delete
+
+    //add
+    else {
+        if ((req.body.name !== undefined) && (req.body.name.length > 0)) {
+            var newPage = new Page({
+                'name': req.body.name,
+                'description': req.body.description,
+                'numsLiked': req.body.numsLiked
+            });
+
+            newPage.save(function(error, img, count){
+                if(error && (error.name == 'ValidationError')) {
+                    Tab.findOne({'slug':req.params.slug},function(err,tabs,count) {
+                        res.render('tabsSlug.hbs', {'imagePosts': tabs, 'err':error});
+                    });
+                }
+
+                else
+                    Tab.findOneAndUpdate({'slug': req.params.slug}, {$push: {'pages': newPage}}, function (error, tabs, count) {
+                        res.redirect('/tabs/' + req.params.slug);
+                    });
+
+            });
+
+        }
+
+        else
+            res.redirect('/tabs/' + req.params.slug);
+
+    }//end add
+
+});
+
+
+
+
+
+
+
+
+
+
+//PORT=19262 NODE_ENV=PRODUCTION node app.js
+
+app.listen(process.env.PORT||3000);
+
+
+//local testing
+//app.listen(3000);

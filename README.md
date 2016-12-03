@@ -1,9 +1,10 @@
 #Daydreamer's Book
 
 ## Overview
-We are all trying to discover who we are in the world. However, sometimes we become too engaged in living that we could not remember a big part of our identification: our favorite things!
+It has become really hard to not be deprived of sleep. It has become harder to not forget our dreams.
+Whether it is dreams at night or in the day, the chances they become true will increase when we remember them.
 
-My Favorite Things is a web app that allows users to keep track of their favorite things! Users can register and login. After they are logged in, they can create or view categories of favorites. For every category they have, they can add or delete a customized item which includes a name, a quantity that they can update to represent the number of times they feel a strong love towards the item, and an optional description of special feelings.
+Daydreamer's Book is a web app that allows daydreamers to write a book about their dreams! Users can register and login. After they are logged in, they can create or view tabs or sections, grouped according to the user's liking. For every tab they have, they can add or delete a customized page which includes a name/title, a quantity that they can update to represent the number of times they feel a strong love towards the dream, and an optional description of all the details and special feelings.
 
 
 ## Data Model

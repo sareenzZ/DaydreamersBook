@@ -16,7 +16,7 @@ var User = new mongoose.Schema({
 // * includes a name, a quantity of number of times loved, and an optional description/feeling/details that can be edited
 var Page = new mongoose.Schema({
     name: {type: String, required: true},
-    numsLiked: {type: Number, min: 1, required: true},
+    numsLiked: {type: Number, min: 1, required: false},
     description:{type: String, required: false}
 }, {
     _id: true
@@ -62,3 +62,7 @@ if (process.env.NODE_ENV == 'PRODUCTION') {
 
 
 mongoose.connect(dbconf);
+
+
+//local testing
+//mongoose.connect('mongodb://localhost/project');

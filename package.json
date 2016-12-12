@@ -23,7 +23,6 @@
     "mongoose": "^4.6.8",
     "mongoose-url-slugs": "^0.2.1",
 
-    //added for user authntication and sign up
     "bcryptjs": "^0.7.12",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0"

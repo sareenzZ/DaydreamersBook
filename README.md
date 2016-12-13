@@ -14,16 +14,18 @@ First draft schema:
 // * our site requires authentication... 
 // * so users have a username and password 
 // * they also can have 0 or more lists 
-var User = new mongoose.Schema({     
-  // username, password provided by plugin     
-  lists:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'List' }] 
-});  
-
+var User = new Schema({
+    // username, password provided by plugin
+    lists:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tab' }],
+    username: String,
+    password: String
+});
 // a page (or group of the same ideas under a topic) in a section
 // * includes a name, a quantity of number of times loved, and an optional description/feeling/details that can be edited
-var Page = new mongoose.Schema({
+var Page = new Schema({
     name: {type: String, required: true},
-    numsLiked: {type: Number, min: 1, required: true},
+    numsLiked: {type: Number, default:0, required: false},
+    //numsLiked: {type: Number, min: 1, required: false},
     description:{type: String, required: false}
 }, {
     _id: true
@@ -32,9 +34,10 @@ var Page = new mongoose.Schema({
 // a tab of ideas/'dreams'
 // * each tab must have a related user
 // * a tab can include 0 or more pages
-var Tab = new mongoose.Schema({
+var Tab = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     name: {type: String, required: true},
+    totalLikes: {type: Number, default:0},
     createdAt: {type: Date, default: Date.now},
     pages: [Page]
 }, {
@@ -75,9 +78,8 @@ var Tab = new mongoose.Schema({
     * I'm going to be using Passport.js for user authentication
     * implement sign up and registration 
     * And account has been made for testing; I'll email you the password
-* (2 points) Use a CSS framework throughout my site, use a reasonable of customization of the framework 
-    * with Bootstrap 
-    * configure a theme 
+* (4 points) Perform client side form validation using custom JavaScript or JavaScript library
+    * errors must be integrated into the DOM
 
 
 

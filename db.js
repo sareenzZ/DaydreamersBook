@@ -40,7 +40,7 @@ var Page = new Schema({
 var Tab = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     name: {type: String, required: true},
-    //numsTotal:[Number],
+    totalLikes: {type: Number, default:0},
     createdAt: {type: Date, default: Date.now},
     pages: [Page]
 }, {

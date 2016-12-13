@@ -189,6 +189,11 @@ app.get('/book',isAuthenticated,function (req,res) {
 app.get('/tabs', function(req, res) {
     if(req.user) {
         Tab.find({'user': req.user.id}, function (err, tabs, count) {
+            if(tabs.pages) {
+                tabs.totalLikes = tabs.pages.reduce(function (a, b) {
+                    return a.numsLiked + b.numsLiked;
+                }, 0);
+            }
             res.render('tabs.hbs', {'tabs': tabs});
         });
     }
@@ -316,9 +321,30 @@ app.post('/tabs/:slug', function(req, res, next){
 
 });
 
+/*
+app.get('/api/pages', function(req, res) {
+    var movieFilter = {},
+        searchExists = false;
 
+    if(req.query.director) {
+        movieFilter.director = req.query.director;
+        searchExists = true;
+    }
 
+    Movie.find(movieFilter, function(err, tabs, count) {
 
+        res.json(movies.map(function(ele){
+            return {
+                'title':ele.title,
+                'director':ele.director,
+                'year': ele.year
+            };
+        }));
+
+    });
+
+});
+*/
 
 
 

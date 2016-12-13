@@ -44,6 +44,10 @@
     </div class='tab'>
     <input type="checkbox" name="check" value={{_id}}>
     <a href="/tabs/{{slug}}"> <b>{{name}}</b></a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <img name = "likes" src = "/img/heart.png">
+    <text> x&nbsp;{{totalLikes}}</text>
+
     {{#each pages}}
         <p>{{name}}&nbsp;
             <!--&nbsp;<img src = "/img/heart.png">

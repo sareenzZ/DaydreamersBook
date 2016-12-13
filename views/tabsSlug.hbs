@@ -33,9 +33,14 @@
     {{#each tabs.pages}}
         </br><input type="checkbox" name="check" value={{_id}}>
         <b>{{name}} &nbsp;&nbsp;&nbsp;&nbsp;</b>
-        <img id = "likes" src = "/img/heart.png">
-        <text>x</text> <b id="numLikes">0</b></br>
-        <!-- <text> x {{numsLiked}}</text></br> -->
+        <img name = "likes" src = "/img/heart.png">
+         <text>x</text> <b id="numLikes">0</b></br>
+
+
+        <!--<text> x {{numsLiked}}</text></br>
+        <span class="hidden"> {{_id}}</span>-->
+
+
 
         <text>{{description}}</text></br>
         <!-- <img src=> -->
@@ -58,5 +63,5 @@
 
 </br>
 <a href="/tabs">Back to Table of Contents</a>
-
+</br>
 </html>

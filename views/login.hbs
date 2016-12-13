@@ -1,5 +1,29 @@
 <html>
 
+<head>
+    <script>
+        document.addEventListener("DOMContentLoaded", main);
+        function main() {
+            var f = document.getElementById('loginBtn');
+            f.addEventListener('click', function (evt) {
+                if( (document.getElementsByName('username')[0].value == "")
+                ||(document.getElementsByName('password')[0].value == "") ) {
+                    evt.preventDefault();
+                    var err = document.createTextNode("Please enter username and password");
+                    var span = document.createElement("span");
+                    span.style.color = "red";
+                    span.appendChild(err);
+                    document.getElementById('log').appendChild(span);
+                }
+
+            });
+        }
+    </script>
+
+
+</head>
+
+
 
 <body>
 
@@ -7,9 +31,9 @@
 <!-- reference : https://www.ctl.io/developers/blog/post/build-user-authentication-with-node-js-express-passport-and-mongodb
 ...not working yet -->
 
-<div>
+<div id = "log">
 
-    <form id="login" class="collapse" action="/login" method="post">
+    <form class="collapse" action="/login" method="post">
         <div>
             <p></p>
             <label>Username:</label>
@@ -20,14 +44,14 @@
             <input type="password" class="form-control" name="password"/>
         </div>
         <div>
-            <input type="submit" class="btn btn-primary btn-sm" value="Log In"/>
+            <input type="submit" id="loginBtn" class="btn btn-primary btn-sm" value="Log In"/>
         </div>
     </form>
 
 </div>
 
 
-
+</br>
 <div id="local" class="collapse">
     <a href="login">I already have an account</a>
     <a href="signup">I need to make an account</a>

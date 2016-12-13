@@ -27,9 +27,11 @@ app.use(express.static('public'));
 
 var passport = require('passport');
     LocalStrategy = require('passport-local').Strategy;
+var flash=require("connect-flash");
 var expressSession = require('express-session');
 
 app.use(expressSession({secret: 'mySecret', resave:'false', saveUninitialized:'false'}));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -63,11 +65,11 @@ passport.use('local-login', new LocalStrategy({
             if(err) return done(err);
             if(!user){
                 console.log('Please enter a valid username instead of '+username );
-                return done(null,false, {message:'No user found'});
+                return done(null,false, req.flash('message','No user found.'));
             }
             if(!user.isValidPassword(password)) {
                 console.log('Invlaid password!');
-                return done(null, false, {'message': 'wrong password.'});
+                return done(null, false, req.flash('message', 'Invalid password.'));
             }
 
             return done(null,user);
@@ -86,7 +88,7 @@ passport.use('local-signup', new LocalStrategy({
                     if (err) {console.log('SignUp Error: '+err); return done(err);}
                     if (user) {
                         console.log('User already exists');
-                        return done(null, false);
+                        return done(null, false, req.flash('message',"User already exists."));
                     } else {
 
                         var newUser = new User()
@@ -191,7 +193,7 @@ app.get('/tabs', function(req, res) {
         });
     }
     else
-        console.log("please login :)");
+        res.send("please login :)");
 
 });
 
@@ -243,9 +245,13 @@ app.post('/tabs',function(req, res) {
 //slug for a tab -- tab page
 app.get('/tabs/:slug', function(req, res, next){
 
-    Tab.findOne({'slug':req.params.slug}, function(err,tabs,count) {
-        res.render('tabsSlug.hbs', {'tabs': tabs});
-    });
+    if(!req.user) res.send("please login :)");
+
+    else {
+        Tab.findOne({'slug': req.params.slug}, function (err, tabs, count) {
+            res.render('tabsSlug.hbs', {'tabs': tabs});
+        });
+    }
 
 });
 

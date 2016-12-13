@@ -1,17 +1,41 @@
 <html>
 
 <!--use bootstrap here --> 
+<head>
+<script>
+    document.addEventListener("DOMContentLoaded", main);
+    function main() {
+        var f = document.getElementById('add');
+        f.addEventListener('click', function (evt) {
+            if (document.getElementsByName('tabName')[0].value == "") {
+                evt.preventDefault();
+                var err = document.createTextNode("Please enter a Tab name");
+                var span = document.createElement("span");
+                span.style.color = "red";
+                span.appendChild(err);
+                document.getElementById('addF').appendChild(span);
+            }
+
+        });
+    }
+</script>
+
+
+
+</head>
 
 <body>
 
 <p style="color:red">{{err}}</p></br>
 
-
-<form method="POST" action="">
+<div id = "addF">
+<form id = 'addForm' method="POST" action="">
     Tab: <input type="text" name="tabName">
-    <input type="submit" name = 'add' value="Add ">
+    <input type="submit" id= 'add' name = 'add' value="Add ">
 </form>
+</div>
 </br></br></br>
+
 
 <h2>Table of Contents</h2>
 

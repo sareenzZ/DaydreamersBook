@@ -1,10 +1,29 @@
+
 <html>
 
 
-<p style="color:red">{{err}}</p></br>
-
-
 <script src="/stylesheet/updater.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", main);
+    function main() {
+        var f = document.getElementById('add');
+        f.addEventListener('click', function (evt) {
+            if (document.getElementsByName('name')[0].value == "") {
+                evt.preventDefault();
+                var err = document.createTextNode("Please enter a Page name");
+                var span = document.createElement("span");
+                span.style.color = "red";
+                span.appendChild(err);
+                document.getElementById('addF').appendChild(span);
+            }
+
+        });
+    }
+</script>
+
+<body>
+
+<p style="color:red">{{err}}</p></br>
 
 
 <form method="POST" action="">
@@ -28,11 +47,16 @@
 </form>
 
 </br>
-<form method="POST" action="">
+<div id= "addF">
+<form id="addForm" method="POST" action="">
     Page Name: <input type="text" name="name">  Page Description: <textarea name="description"></textarea>
-    <input type="submit" value="Add New Page">
+    <input type="submit" id = "add" value="Add New Page">
 </form>
+</div>
 
+</body>
+
+</br>
 <a href="/tabs">Back to Table of Contents</a>
 
 </html>

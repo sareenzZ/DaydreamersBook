@@ -2,21 +2,33 @@
 var mongoose = require('mongoose');
 URLSlugs = require('mongoose-url-slugs');
 var Schema = mongoose.Schema;
+var bcrypt = require('bcryptjs');
+
+passportLocalMongoose = require('passport-local-mongoose');
 
 // users
 // * our site requires authentication...
 // * so users have a username and password
 // * they also can have 0 or more lists
-var User = new mongoose.Schema({
+
+
+var User = new Schema({
     // username, password provided by plugin
-    lists:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'List' }]
+    lists:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tab' }],
+    username: String,
+    password: String
 });
+ /*
+var User = new Schema({ });
+User.plugin(passportLocalMongoose);
+*/
 
 // a page (or group of the same ideas under a topic) in a section
 // * includes a name, a quantity of number of times loved, and an optional description/feeling/details that can be edited
-var Page = new mongoose.Schema({
+var Page = new Schema({
     name: {type: String, required: true},
-    numsLiked: {type: Number, min: 1, required: false},
+    numsLiked: {type: Number, default:0, required: false},
+    //numsLiked: {type: Number, min: 1, required: false},
     description:{type: String, required: false}
 }, {
     _id: true
@@ -25,9 +37,10 @@ var Page = new mongoose.Schema({
 // a tab of ideas/'dreams'
 // * each tab must have a related user
 // * a tab can include 0 or more pages
-var Tab = new mongoose.Schema({
+var Tab = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     name: {type: String, required: true},
+    //numsTotal:[Number],
     createdAt: {type: Date, default: Date.now},
     pages: [Page]
 }, {
@@ -38,8 +51,20 @@ Tab.plugin(URLSlugs('name',{index_unique:true}));
 
 
 
+User.methods.isValidPassword = function(password){
+    return bcrypt.compareSync(password,this.password);
+}
+
+User.methods.createHash = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
+
+
+
+
 mongoose.model('Tab', Tab);
 mongoose.model('Page', Page);
+mongoose.model('User', User);
 
 
 // is the environment variable, NODE_ENV, set to PRODUCTION?

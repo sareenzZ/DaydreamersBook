@@ -1,10 +1,6 @@
 <html>
 
-<h1>Daydreamer's Book</h1>
-<!--d -->
-
 <!--use bootstrap here --> 
-<h2>Daydreamer's Book</h2>
 
 <body>
 
@@ -25,7 +21,12 @@
     <input type="checkbox" name="check" value={{_id}}>
     <a href="/tabs/{{slug}}"> <b>{{name}}</b></a>
     {{#each pages}}
-        <p>{{name}}</p>
+        <p>{{name}}&nbsp;
+            <!--&nbsp;<img src = "/img/heart.png">
+            <text>x</text> <text id="numLikes">0</text></br>
+             <text> x {{numsLiked}}</text></br> -->
+        </p>
+
     {{/each}}
     </br>
     </div>

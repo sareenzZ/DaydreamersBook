@@ -7,6 +7,7 @@ require('./db');
 var mongoose = require('mongoose');
 var Tab = mongoose.model('Tab');
 var Page = mongoose.model('Page');
+var User = mongoose.model('User');
 
 //set up app
 var app = express();
@@ -15,37 +16,142 @@ var app = express();
 var bodyParser=require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
+//serving static files
+var path = require('path');
+var publicPath = path.resolve(__dirname,'public');
+app.use(express.static('public'));
+
 
 //use passort for user sign in
 
-/*
+
 var passport = require('passport');
-app.use(session({secret: 'secret'}));
+    LocalStrategy = require('passport-local').Strategy;
+var expressSession = require('express-session');
+
+app.use(expressSession({secret: 'mySecret', resave:'false', saveUninitialized:'false'}));
 app.use(passport.initialize());
 app.use(passport.session());
-*/
+
 
 
 app.set('view engine', 'hbs');
+/*
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+*/
+
+passport.serializeUser(function(user,done){
+    done(null,user._id);
+});
+passport.deserializeUser(function(id, done){
+    User.findById(id, function(err, user){
+        done(err,user);
+    });
+});
+
+
+
+
+passport.use('local-login', new LocalStrategy({
+    passReqToCallback: true
+},
+    function(req, username, password, done){
+
+        User.findOne({'username':username}, function (err,user) {
+            if(err) return done(err);
+            if(!user){
+                console.log('Please enter a valid username instead of '+username );
+                return done(null,false, {message:'No user found'});
+            }
+            if(!user.isValidPassword(password)) {
+                console.log('Invlaid password!');
+                return done(null, false, {'message': 'wrong password.'});
+            }
+
+            return done(null,user);
+            }
+        );
+
+}));
+
+passport.use('local-signup', new LocalStrategy({
+        passReqToCallback: true
+    },
+    function(req, username, password, done){
+            process.nextTick(function(){
+
+            User.findOne({'username': username}, function (err, user) {
+                    if (err) {console.log('SignUp Error: '+err); return done(err);}
+                    if (user) {
+                        console.log('User already exists');
+                        return done(null, false);
+                    } else {
+
+                        var newUser = new User()
+
+                        newUser.username = username;
+                        newUser.password = newUser.createHash(password);
+
+                        newUser.save(function(err){
+                            if(err) {console.log('Error: '+err); throw err;}
+                            console.log("SignUp Succeeded");
+                            return done(null,newUser);
+                        });
+
+                    }
+
+
+                });
+
+            });
+    }
+));
+
+
+
+
+
 
 //not working yet...
-app.get('/signin', function(req,res){
+app.get('/login', function(req,res){
+    //login page
+    res.render('login.hbs', {'user':req.user});
+});
+
+app.post('/login', passport.authenticate('local-login', {
+        successRedirect: '/tabs',
+        failureRedirect: '/login',
+        failureFlash : true
+    })
+);
+
+/*
+req.login(user, function(err){
+    if(err){return next(err);}
+    return res.redirect('/users/'+req.user.username);
+});
+*/
+
+app.get('/', function(req,res){
+    //login page
+    res.redirect('/login');
+});
+
+
+app.get('/signup', function(req,res){
     //login page
     res.render('signup.hbs');
 });
 
-/*
 app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
+        successRedirect: '/login',
+        failureRedirect: '/signup',
+        failureFlash : true
     })
 );
 
-app.post('/login', passport.authenticate('local-signin', {
-        successRedirect: '/',
-        failureRedirect: '/signin'
-    })
-);
 
 app.get('/logout', function(req, res){
     var name = req.user.username;
@@ -55,13 +161,37 @@ app.get('/logout', function(req, res){
     req.session.notice = "You have successfully been logged out " + name + "!";
 });
 
-*/
+/*Reference:
+http://passportjs.org/docs/configure
+* */
+
+
+
+var isAuthenticated = function (req,res,next) {
+    if(req.isAuthenticated()) return next();
+    res.redirect('/');
+}
+
+app.get('/book',isAuthenticated,function (req,res) {
+ //   res.render('home', {'user': req.user});
+    if(req.user) {
+        Tab.find(function (err, tabs, count) {
+            res.render('tabs.hbs', {'tabs': tabs});
+        });
+    }
+    else
+        console.log("please login :)");
+});
+
 
 app.get('/tabs', function(req, res) {
-
-    Tab.find(function(err,tabs,count) {
-        res.render('tabs.hbs', {'tabs': tabs});
-    });
+    if(req.user) {
+        Tab.find({'user': req.user.id}, function (err, tabs, count) {
+            res.render('tabs.hbs', {'tabs': tabs});
+        });
+    }
+    else
+        console.log("please login :)");
 
 });
 
@@ -71,7 +201,8 @@ app.post('/tabs',function(req, res) {
     if(req.body.add){
         if ((req.body.tabName !== undefined) && (req.body.tabName.length > 0)) {
             var newTab= new Tab({
-                'name': req.body.tabName
+                'name': req.body.tabName,
+                'user': req.user.id
             });
 
             newTab.save(function(error, t, count){
@@ -109,7 +240,7 @@ app.post('/tabs',function(req, res) {
 
 });
 
-//slug for a tab
+//slug for a tab -- tab page
 app.get('/tabs/:slug', function(req, res, next){
 
     Tab.findOne({'slug':req.params.slug}, function(err,tabs,count) {
@@ -118,7 +249,7 @@ app.get('/tabs/:slug', function(req, res, next){
 
 });
 
-
+//add and delete a page
 app.post('/tabs/:slug', function(req, res, next){
 
     //delete

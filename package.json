@@ -17,14 +17,15 @@
   },
   "homepage": "https://github.com/nyu-csci-ua-0480-007-fall-2016/zz589-final-project#readme",
   "dependencies": {
+    "bcryptjs": "^0.7.12",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "hbs": "^4.0.1",
     "mongoose": "^4.6.8",
     "mongoose-url-slugs": "^0.2.1",
-
-    "bcryptjs": "^0.7.12",
-    "passport": "^0.2.0",
-    "passport-local": "^1.0.0"
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0"
   }
 }

@@ -1,19 +1,25 @@
 <html>
 
-<h2>Daydreamer's Book</h2>
-
 
 <p style="color:red">{{err}}</p></br>
 
+
+<script src="/stylesheet/updater.js"></script>
+
+
 <form method="POST" action="">
 
-    <a href="/tabs/{{tabs.slug}}"> <h1>{{tabs.title}}</h1></a>
+    <p><a href="/tabs/{{tabs.slug}}"> <b style="font-size: 30px;">{{tabs.name}}</b></a>
+        &nbsp;Date: {{tabs.createdAt}}</p>
     {{#each tabs.pages}}
         </br><input type="checkbox" name="check" value={{_id}}>
-        <b>{{name}}</b></br>
+        <b>{{name}} &nbsp;&nbsp;&nbsp;&nbsp;</b>
+        <img id = "likes" src = "/img/heart.png">
+        <text>x</text> <b id="numLikes">0</b></br>
+        <!-- <text> x {{numsLiked}}</text></br> -->
+
         <text>{{description}}</text></br>
         <!-- <img src=> -->
-        <text>{{numsLiked}}</text></br>
         </br></br>
     {{/each}}
 
